@@ -1,0 +1,55 @@
+<html>
+    <style>
+        body {
+            background: rgba(35, 119, 139, 0.493) }
+        section {
+            background: rgba(238, 192, 39, 0.863);
+            font-size: 29px;
+            color: rgb(0, 0, 0);
+            border-radius: 4em;
+            padding: 4em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%) }
+      </style>
+  <section>
+  <head>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>Flask Chatbot</h1>
+<div>
+<div id = "chatbox">
+<p class = "botText"><span>Hi! Iam your Chatterbot.</span></p>
+</div>
+<div id = "userInput">
+<input id ="textInput" type ="text" name="msg" placeholder="Message">
+<input id = "buttonInput" type = "submit" value="Send">
+</div>
+<script>
+function getBotResponse(){
+var rawText = $("#textInput").val();
+var userHtml = '<p class = "userText"><span>' + rawText + '</span></p>';
+$("#textInput").val("");
+$("#chatbox").append(userHtml);
+document.getElementById('userInput').scrollIntoView({block:'start',behaviour:'smooth'});
+$.get("/get", {msg:rawText }).done(function(data) {
+var botHtml = '<p class ="botText"><span>' + data + '</span></p>';
+$("#chatbox").append(botHtml);
+document.getElementById('userInput').scrollIntoView({block : 'start',behaviour:'smooth'});
+});
+}
+$("#textInput").keypress(function(e) {
+if(e.which == 13) {
+getBotResponse();
+}
+});
+$("#buttonInput").click(function() {
+getBotResponse();
+})
+</script>
+</div>
+</body>
+  </section>

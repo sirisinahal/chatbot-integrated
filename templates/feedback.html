@@ -1,0 +1,39 @@
+<html>
+    <style>
+        body {
+            background: rgba(35, 119, 139, 0.493) }
+        section {
+            background: rgba(238, 192, 39, 0.863);
+            font-size: 29px;
+            color: rgb(0, 0, 0);
+            border-radius: 4em;
+            padding: 4em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%) }
+      </style>
+  <section>
+   {%block content%}
+        {%if flag==1%}
+            <p>
+                <h1>Do you want to continue? </h1>
+<form action="{{ url_for('reviewbot') }}" method="POST">
+<button type="submit" name="botreview" value="yes">YES</button>
+<button type="submit"  name="botreview" value="no">NO</button>
+</form>
+            </p>
+        {%endif%}
+        {%if flag==2%}
+       <h1> Please share your feedback</h1>
+       <form action="{{ url_for('userfb') }}" method="POST">
+       <textarea name="feedback_res"></textarea>
+       <button type="submit" value="feed">Submit</button>
+    </form>
+        {%endif%}
+        {%if flag==3%}
+        <h1>Thankyou for sharing</h1>
+        {%endif%}
+{%endblock%}
+  </section>
