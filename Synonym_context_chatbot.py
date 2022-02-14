@@ -103,14 +103,14 @@ class Abbreviations_Detection():
             responses[i]=self.replace_abb(abbreviations1,responses[i])
             questions[i]=self.replace_abb(abbreviations1,questions[i])
          
-        with open('abbreviated_corpus.csv','w',newline='',encoding='utf-8') as file:
+        with open('abbreviated_corpus_s.csv','w',newline='',encoding='utf-8') as file:
             writer=csv.writer(file)
             writer.writerow(['questions','responses'])
             for i in range(len(questions)):
                 writer.writerow([questions[i],responses[i]])
         
         
-        filename1 = 'abbreviations.pickle' 
+        filename1 = 'abbreviations_s.pickle' 
         outfile = open(filename1,'wb') 
         pickle.dump(abbreviations1,outfile) 
         outfile.close()
@@ -285,23 +285,23 @@ class Abbreviations_Detection():
             responses[i]=self.replace_abb(abbreviations1,responses[i])
             questions[i]=self.replace_abb(abbreviations1,questions[i])
         
-        with open('abbreviated_corpus.csv','w',newline='',encoding='utf-8') as file:
+        with open('abbreviated_corpus_s.csv','w',newline='',encoding='utf-8') as file:
             writer=csv.writer(file)
             writer.writerow(['questions','responses'])
             for i in range(len(questions)):
                 writer.writerow([questions[i],responses[i]])
-        with open('abbreviations.csv','w',newline='',encoding='utf-8') as file:
+        with open('abbreviations_s.csv','w',newline='',encoding='utf-8') as file:
             writer=csv.writer(file)
             writer.writerow(['full form','short form'])
             for i in abbreviations.keys():
                 writer.writerow([i,abbreviations[i]])
                 
-        filename1 = 'abbreviations.pickle' 
+        filename1 = 'abbreviations_s.pickle' 
         outfile = open(filename1,'wb') 
         pickle.dump(abbreviations1,outfile) 
         outfile.close()
         
-        return 'abbreviated_corpus.csv',filename1,'abbreviations.csv'
+        return 'abbreviated_corpus_s.csv',filename1,'abbreviations_s.csv'
 
 
 # In[3]:
@@ -368,13 +368,13 @@ class Phrase_Collection():
             responses[i]=self.replace_phrases(phrases1,responses[i])
             
 
-        with open('phrase_corpus.csv','w',newline='',encoding='utf-8')as file:
+        with open('phrase_corpus_s.csv','w',newline='',encoding='utf-8')as file:
             writer=csv.writer(file)
             writer.writerow(['questions','responses'])
             for i in range(len(questions)):
                 writer.writerow([questions[i],responses[i]])
         
-        filename1 = 'phrases.pickle' 
+        filename1 = 'phrases_s.pickle' 
         outfile = open(filename1,'wb') 
         pickle.dump(phrases1,outfile) 
         outfile.close()
@@ -429,12 +429,12 @@ class Phrase_Collection():
 
         sp,co=co_occurences_with_hyphen(responses)
         
-        filename1='series.pickle'
+        filename1='series_s.pickle'
         outfile=open(filename1,'wb')
         pickle.dump(series,outfile)
         outfile.close()
         
-        with open('phrase.csv','w',newline='',encoding='utf-8')as file:
+        with open('phrase_s.csv','w',newline='',encoding='utf-8')as file:
             writer=csv.writer(file)
             writer.writerow(['phrases'])
             for i in set(co):
@@ -497,24 +497,24 @@ class Phrase_Collection():
             responses[i]=self.replace_phrases(sp,responses[i])
             
 
-        with open('phrase_corpus.csv','w',newline='',encoding='utf-8')as file:
+        with open('phrase_corpus_s.csv','w',newline='',encoding='utf-8')as file:
             writer=csv.writer(file)
             writer.writerow(['questions','responses'])
             for i in range(len(questions)):
                 writer.writerow([questions[i],responses[i]])
                 
-        with open('phrase.csv','a',newline='',encoding='utf-8')as file:
+        with open('phrase_s.csv','a',newline='',encoding='utf-8')as file:
             writer=csv.writer(file)
             writer.writerow(['phrases'])
             for i in phrase:
                 writer.writerow([i])
 
-        filename1='phrases.pickle'
+        filename1='phrases_s.pickle'
         outfile=open(filename1,'wb')
         pickle.dump(sp,outfile)
         outfile.close()
 
-        return 'phrase_corpus.csv','phrases.pickle','phrase.csv'
+        return 'phrase_corpus_s.csv','phrases_s.pickle','phrase_s.csv'
     
     def replace_phrases(self,sp,sentences):
         for i in sentences.split():
@@ -624,7 +624,7 @@ def find_corpus_distinct_words(que_distinct_words,res_distinct_words):
 
 def generate_distinct_words_file(distinct_words):
     obj=pd.DataFrame(distinct_words)
-    obj.to_csv('distinct_words.csv',index=False,header=['words'])
+    obj.to_csv('distinct_words_s.csv',index=False,header=['words'])
 
 def generate_distinct_words(corpus_file):
     questions,responses=extract_corpus_file(corpus_file)
@@ -719,7 +719,7 @@ def extract_distinct_file(file):
     return words
 
 def generate_synonym_file(corpus_dictionary):
-    create_pickle_file('word_synonymlist.pickle',corpus_dictionary) #distinct_word and its synonyms list
+    create_pickle_file('word_synonymlist_s.pickle',corpus_dictionary) #distinct_word and its synonyms list
 
 def generate_synonyms(distinct_words_file):
     words=extract_distinct_file(distinct_words_file)
@@ -751,7 +751,7 @@ def get_nouns_list(intents):
 # In[8]:
 
 
-def get_definations(i,definations):# i is list of nouns in caps or mixed
+def get_definations_s(i,definations_s):# i is list of nouns in caps or mixed
         
     def get_from_web(c):
         try:
@@ -770,19 +770,19 @@ def get_definations(i,definations):# i is list of nouns in caps or mixed
             [sent_tokens.append(sent) for sent in nltk.sent_tokenize(text)]
             for k in range(2):
                 try:
-                    if j.lower() not in definations.keys():
-                        definations[j.lower()]=sent_tokens[k]+' '
+                    if j.lower() not in definations_s.keys():
+                        definations_s[j.lower()]=sent_tokens[k]+' '
                     else:
-                        definations[j.lower()]+=sent_tokens[k]+' '
+                        definations_s[j.lower()]+=sent_tokens[k]+' '
                 except:
                     pass
-    filename='one_word_descriptions.pickle'
+    filename='one_word_descriptions_s.pickle'
     output=open(filename,'wb')
-    pickle.dump(definations,output)
+    pickle.dump(definations_s,output)
     output.close()   
-    return definations
+    return definations_s
 
-def definations(filename,series_file,noun_list_file): # filename csv file of corpus,series is pickle file of series list,noun_list is pickle file
+def definations_s(filename,series_file,noun_list_file): # filename csv file of corpus,series is pickle file of series list,noun_list is pickle file
     
     def remove_stopwords(sentence): #STOPWORDS REMOVAL
         stop_words=set(stopwords.words('english'))
@@ -791,18 +791,18 @@ def definations(filename,series_file,noun_list_file): # filename csv file of cor
         sentence=re.sub(r'\'s\?','',sentence)
         sentence=re.sub(r'[^\w\s\-]',' ',sentence)
         return sentence
-    definations={}
+    definations_s={}
     for i in range(len(questionlist)):
         intent=remove_stopwords(remove_punctuation(questionlist[i].lower()))
         if len(intent)==1:
-            if intent[0] not in definations.keys():
-                definations[intent[0]]=responselist[i]
+            if intent[0] not in definations_s.keys():
+                definations_s[intent[0]]=responselist[i]
     
     nouns = set()
-    for i in definations.keys():
+    for i in definations_s.keys():
         nouns.add(i)
     nouns = set()
-    with open('series.pickle', 'rb') as file: 
+    with open('series_s.pickle', 'rb') as file: 
         series = pickle.load(file)
         file.close()
     for i in series:
@@ -810,7 +810,7 @@ def definations(filename,series_file,noun_list_file): # filename csv file of cor
     for i in noun_list_file:
         nouns.add(i)
         
-    return get_definations(nouns,definations)
+    return get_definations_s(nouns,definations_s)
 
 
 # In[9]:
@@ -887,8 +887,8 @@ def generate_entities_and_labels_dictionary(corpus_file):
             else:
                 dis_res[k].add(i)
 
-    create_pickle('entities_and_labels_questions_dictionary.pickle', dis_que)
-    create_pickle('entities_and_labels_responses_dictionary.pickle', dis_res)
+    create_pickle('entities_and_labels_questions_dictionary_s.pickle', dis_que)
+    create_pickle('entities_and_labels_responses_dictionary_s.pickle', dis_res)
 
 
 # ### Entities mapping to corpus indices
@@ -941,8 +941,8 @@ def generate_entities_mapped_to_corpus_dictionary(corpus_file):
                 else:
                     dis_ent_dic_res[j].add(i)   
                 
-    create_pickle('entities_mapped_to_questions_dictionary.pickle', dis_ent_dic_que)
-    create_pickle('entities_mapped_to_responses_dictionary.pickle', dis_ent_dic_res)
+    create_pickle('entities_mapped_to_questions_dictionary_s.pickle', dis_ent_dic_que)
+    create_pickle('entities_mapped_to_responses_dictionary_s.pickle', dis_ent_dic_res)
 
 
 # ### Entity extraction
@@ -1031,11 +1031,11 @@ def compare_entities(dic1):
 
 
 def build_corpus_dictionary(corpus_file):
-    if os.path.exists("corpus.txt"):
-        os.remove("corpus.txt")
+    if os.path.exists("corpus_s.txt"):
+        os.remove("corpus_s.txt")
     
     #text file that stores the distinct words
-    corpus_dict = open("corpus.txt", "a", encoding = 'cp1252')
+    corpus_dict = open("corpus_s.txt", "a", encoding = 'cp1252')
     words_set = set()
 
     #this reads the corpus csv file
@@ -1051,7 +1051,7 @@ def build_corpus_dictionary(corpus_file):
                         words_set.add(word.lower())
 
     #this reads the generated synonyms
-    syn = pd.read_pickle('word_synonymlist.pickle')
+    syn = pd.read_pickle('word_synonymlist_s.pickle')
     for items in syn:
         if items.isnumeric() == False: 
             words_set.add(items)
@@ -1067,7 +1067,7 @@ def build_corpus_dictionary(corpus_file):
                     words_set.add(word[j:])
 
     #this reads the detected abbreviaions
-    abb = pd.read_pickle('abbreviations.pickle')
+    abb = pd.read_pickle('abbreviations_s.pickle')
     for item in abb:
         for word in abb[item]:
             if word.isnumeric() == False:
@@ -1087,7 +1087,7 @@ def build_corpus_dictionary(corpus_file):
                 words_set.add(abb[item][word].lower())
 
     #this reads the detected phrases
-    di = pd.read_pickle('phrases.pickle')
+    di = pd.read_pickle('phrases_s.pickle')
     for i in di:
         if i.isnumeric() == False:
             words_set.add(i)
@@ -1111,7 +1111,7 @@ def build_corpus_dictionary(corpus_file):
                 words_set.add(word[j:].lower())
 
     #this reads the one word descriptions
-    with open('one_word_descriptions.pickle', 'rb') as read_obj:
+    with open('one_word_descriptions_s.pickle', 'rb') as read_obj:
         pkl_reader = pickle.load(read_obj)
         for items in pkl_reader.items():
             tokenizer = nltk.RegexpTokenizer(r"\w+")
@@ -1121,7 +1121,7 @@ def build_corpus_dictionary(corpus_file):
                     words_set.add(word)
                     words_set.add(word.lower())
 
-    create_pickle("words_set.pickle", list(words_set))
+    create_pickle("words_set_s.pickle", list(words_set))
     
     for word in words_set:
         try:
@@ -1141,11 +1141,11 @@ def build_corpus_dictionary(corpus_file):
 
 
 # def build_corpus_dictionary_mac(corpus_file):
-#     if os.path.exists("corpus.txt"):
-#         os.remove("corpus.txt")
+#     if os.path.exists("corpus_s.txt"):
+#         os.remove("corpus_s.txt")
     
 #     #text file that stores the distinct words
-#     corpus_dict = open("corpus.txt", "a", encoding = 'utf8')
+#     corpus_dict = open("corpus_s.txt", "a", encoding = 'utf8')
 #     words_set = set()
 
 #     #this reads the corpus csv file
@@ -1161,7 +1161,7 @@ def build_corpus_dictionary(corpus_file):
 #                         words_set.add(word.lower())
 
 #     #this reads the generated synonyms
-#     syn = pd.read_pickle('word_synonymlist.pickle')
+#     syn = pd.read_pickle('word_synonymlist_s.pickle')
 #     for items in syn:
 #         if items.isnumeric() == False: 
 #             words_set.add(items)
@@ -1177,7 +1177,7 @@ def build_corpus_dictionary(corpus_file):
 #                     words_set.add(word[j:])
 
 #     #this reads the detected abbreviaions
-#     abb = pd.read_pickle('abbreviations.pickle')
+#     abb = pd.read_pickle('abbreviations_s.pickle')
 #     for item in abb:
 #         for word in abb[item]:
 #             if word.isnumeric() == False:
@@ -1197,7 +1197,7 @@ def build_corpus_dictionary(corpus_file):
 #                 words_set.add(abb[item][word].lower())
 
 #     #this reads the detected phrases
-#     di = pd.read_pickle('phrases.pickle')
+#     di = pd.read_pickle('phrases_s.pickle')
 #     for i in di:
 #         if i.isnumeric() == False:
 #             words_set.add(i)
@@ -1221,7 +1221,7 @@ def build_corpus_dictionary(corpus_file):
 #                 words_set.add(word[j:].lower())
 
 #     #this reads the one word descriptions
-#     with open('one_word_descriptions.pickle', 'rb') as read_obj:
+#     with open('one_word_descriptions_s.pickle', 'rb') as read_obj:
 #         pkl_reader = pickle.load(read_obj)
 #         for items in pkl_reader.items():
 #             tokenizer = nltk.RegexpTokenizer(r"\w+")
@@ -1231,7 +1231,7 @@ def build_corpus_dictionary(corpus_file):
 #                     words_set.add(word)
 #                     words_set.add(word.lower())
 
-#     create_pickle("words_set.pickle", list(words_set))
+#     create_pickle("words_set_s.pickle", list(words_set))
 
 #     corpus_dict.write('fullform')
 #     corpus_dict.write("\n")
@@ -1870,16 +1870,16 @@ def StartChatbot(usertext,raw_questions,raw_responses,qn_intents,res_intents,POS
 
     if(user_response.lower() == 'bye' or user_response.lower() == 'no'):
         print("ROBO: Bye! take care...")
-        return "ROBO: Bye! take care..." 
+        return "Bye! take care..." 
         
     elif (user_response == 'thanks' or user_response == 'thank you' ):
         print("ROBO: You are welcome... Do you have any other question?")
-        return "ROBO: You are welcome... Do you have any other question?"
+        return "You are welcome... Do you have any other question?"
     else:
         grt = greeting(user_response)
         if (grt != None):
             print("ROBO: ", grt)
-            return "ROBO: " + grt
+            return grt
         elif 'fullform' in user_response or 'full form' in user_response:
             #full form check
             response = find_fullform(user_response)
@@ -1889,7 +1889,7 @@ def StartChatbot(usertext,raw_questions,raw_responses,qn_intents,res_intents,POS
                 return "ROBO: " + "Sorry I don't have enough information to answer you"+ " -- UNKNOWN FULL FORM --"
             else:
                 print("ROBO: " + response)
-                return "ROBO: " + response 
+                return response 
         else:
             #abbreviation check
             user_response = abbreviation_check(user_response)
@@ -1906,21 +1906,22 @@ def StartChatbot(usertext,raw_questions,raw_responses,qn_intents,res_intents,POS
             if not bot_response_list:
                 print("ROBO: " + "Sorry I don't have enough information to answer you")
                 print("-- NO BOT RESPONSE --")
-                return "ROBO: " + "Sorry I don't have enough information to answer you"+" -- NO BOT RESPONSE --" 
+                return "Sorry I don't have enough information to answer you"
             elif type(bot_response_list) == type(''):
                 print("ROBO: " + bot_response_list)
-                return "ROBO: " + bot_response_list 
+                return bot_response_list 
             elif len(bot_response_list) == 1:
                 print("ROBO: " + raw_responses[bot_response_list[0][0][0]])
-                return "ROBO: " + raw_responses[bot_response_list[0][0][0]]
+                return raw_responses[bot_response_list[0][0][0]]
             elif len(bot_response_list) > 1:
+                respi=""
                 print("ROBO: " + "I am afraid that my response may not be precise. I will provide you relevant information. \n")
-                resp=""
                 for k in range(0,len(bot_response_list)):
                     print(raw_responses[bot_response_list[k][0][0]])
-                    resp=resp+raw_responses[bot_response_list[k][0][0]]+"\n"
+
                     res.append(raw_responses[bot_response_list[k][0][0]])
-                return "ROBO: " + "I am afraid that my response may not be precise. I will provide you relevant information. \n"+ resp
+                    respi=respi+"."+raw_responses[bot_response_list[k][0][0]]
+                return "I am afraid that my response may not be precise. I will provide you relevant information. \n"+ respi
 
     end_time = datetime.now()
     print("Time (in seconds): ", (end_time-start_time).total_seconds())
@@ -1936,49 +1937,49 @@ def BuildChatbot(original_corpus):
     print("Takes some time... Please wait!")
     
     #Abbreviation detection
-    if os.path.exists("abbreviated_corpus.csv") == False or os.path.exists("abbreviations.pickle") == False:
+    if os.path.exists("abbreviated_corpus_s.csv") == False or os.path.exists("abbreviations_s.pickle") == False:
         print("Abbreviation files are being created...")
         time1 = datetime.now()
         abb_det = Abbreviations_Detection()
         abb_det.Abbreviations(original_corpus)
-        abb_det.Update_abbreviations('abbreviations.csv', original_corpus)
+        abb_det.Update_abbreviations('abbreviations_s.csv', original_corpus)
         time2 = datetime.now()
         print("Abbreviation files created in (seconds): ", (time2-time1).total_seconds())
     
     #questions and intents
-    if os.path.exists("questions.pickle") == False or os.path.exists("responses.pickle") == False:
+    if os.path.exists("questions_s.pickle") == False or os.path.exists("responses_s.pickle") == False:
         print("Raw corpus files are being created...")
         time1 = datetime.now()
         raw_questions, raw_responses = getQuestionseAndResponseList(original_corpus,'questions','responses')
-        create_pickle("questions.pickle", raw_questions)
-        create_pickle("responses.pickle", raw_responses)
+        create_pickle("questions_s.pickle", raw_questions)
+        create_pickle("responses_s.pickle", raw_responses)
         time2 = datetime.now()
         print("Raw corpus files created in (seconds): ", (time2-time1).total_seconds())
     
-    if os.path.exists("abb_questions.pickle") == False or os.path.exists("abb_responses.pickle") == False:
+    if os.path.exists("abb_questions_s.pickle") == False or os.path.exists("abb_responses_s.pickle") == False:
         print("Abbreviated corpus files are being created...")
         time1 = datetime.now()
-        questionlist, responselist = getQuestionseAndResponseList("abbreviated_corpus.csv",'questions','responses')
-        create_pickle("abb_questions.pickle", questionlist)
-        create_pickle("abb_responses.pickle", responselist)
+        questionlist, responselist = getQuestionseAndResponseList("abbreviated_corpus_s.csv",'questions','responses')
+        create_pickle("abb_questions_s.pickle", questionlist)
+        create_pickle("abb_responses_s.pickle", responselist)
         time2 = datetime.now()
         print("Abbreviated corpus files created in (seconds): ", (time2-time1).total_seconds())
     
-    if os.path.exists("questions_intents.pickle") == False or os.path.exists("responses_intents.pickle") == False or os.path.exists("word_to_qn_intents_dict.pickle") == False or os.path.exists("word_to_res_intents_dict.pickle") == False:
+    if os.path.exists("questions_intents_s.pickle") == False or os.path.exists("responses_intents_s.pickle") == False or os.path.exists("word_to_qn_intents_dict_s.pickle") == False or os.path.exists("word_to_res_intents_dict_s.pickle") == False:
         time1 = datetime.now()
         print("Intents files are being created...")
-        questionlist = pd.read_pickle("abb_questions.pickle")
-        responselist = pd.read_pickle("abb_responses.pickle")
+        questionlist = pd.read_pickle("abb_questions_s.pickle")
+        responselist = pd.read_pickle("abb_responses_s.pickle")
         qn_intents = getIntents(questionlist)
         res_intents = getIntents(responselist)
-        create_pickle("questions_intents.pickle", qn_intents)
-        create_pickle("responses_intents.pickle", res_intents)
+        create_pickle("questions_intents_s.pickle", qn_intents)
+        create_pickle("responses_intents_s.pickle", res_intents)
         syn_dict = {}
         word_to_qn_intents_dict = getWordTOIntentsDict(qn_intents,syn_dict)
         word_to_res_intents_dict = getWordTOIntentsDict(res_intents,syn_dict)
-        create_pickle("syn_dict.pickle", syn_dict)
-        create_pickle("word_to_qn_intents_dict.pickle", word_to_qn_intents_dict)
-        create_pickle("word_to_res_intents_dict.pickle", word_to_res_intents_dict)
+        create_pickle("syn_dict_s.pickle", syn_dict)
+        create_pickle("word_to_qn_intents_dict_s.pickle", word_to_qn_intents_dict)
+        create_pickle("word_to_res_intents_dict_s.pickle", word_to_res_intents_dict)
         time2 = datetime.now()
         print("Intents files created in (seconds): ", (time2-time1).total_seconds())
 
@@ -1988,59 +1989,59 @@ def BuildChatbot(original_corpus):
 
 def create_files():
     #Entities and labels
-    if os.path.exists("entities_and_labels_responses_dictionary.pickle") == False or os.path.exists("entities_and_labels_questions_dictionary.pickle") == False:
+    if os.path.exists("entities_and_labels_responses_dictionary_s.pickle") == False or os.path.exists("entities_and_labels_questions_dictionary_s.pickle") == False:
         print("Entity labels are being created...")
         time1 = datetime.now()
-        generate_entities_and_labels_dictionary('abbreviated_corpus.csv')
+        generate_entities_and_labels_dictionary('abbreviated_corpus_s.csv')
         time2 = datetime.now()
         print("Entity labels created in (seconds): ", (time2-time1).total_seconds())
     
     #Phrases
-    if os.path.exists("phrase_corpus.csv") == False or os.path.exists("phrases.pickle") == False or os.path.exists("series.pickle") == False:
+    if os.path.exists("phrase_corpus_s.csv") == False or os.path.exists("phrases_s.pickle") == False or os.path.exists("series_s.pickle") == False:
         print("Phrases files are being created...")
         time1 = datetime.now()
-        with open('entities_and_labels_questions_dictionary.pickle', 'rb') as f: 
+        with open('entities_and_labels_questions_dictionary_s.pickle', 'rb') as f: 
             entities = pickle.load(f)
-        with open('entities_and_labels_responses_dictionary.pickle', 'rb') as f: 
+        with open('entities_and_labels_responses_dictionary_s.pickle', 'rb') as f: 
             en = pickle.load(f)
         for i in en.keys():
             if i not in entities.keys():
                 entities[i]=en[i]    
         P = Phrase_Collection()
-        sp,series = P.Phrases_with_hyphen('abbreviated_corpus.csv')
-        P.Phrase_collection('abbreviated_corpus.csv',entities,sp,scoring='npmi')
+        sp,series = P.Phrases_with_hyphen('abbreviated_corpus_s.csv')
+        P.Phrase_collection('abbreviated_corpus_s.csv',entities,sp,scoring='npmi')
         time2 = datetime.now()
         print("Phrases files created in (seconds): ", (time2-time1).total_seconds())
     
     #Synonyms generation
-    if os.path.exists("distinct_words.csv") == False or os.path.exists("word_synonymlist.pickle") == False:
+    if os.path.exists("distinct_words_s.csv") == False or os.path.exists("word_synonymlist_s.pickle") == False:
         print("Synonyms files are being created...")
         time1 = datetime.now()
         generate_distinct_words(original_corpus)
-        generate_synonyms('distinct_words.csv')
+        generate_synonyms('distinct_words_s.csv')
         time2 = datetime.now()
         print("Synonyms files created in (seconds): ", (time2-time1).total_seconds())
     
     #One word descriptions
-    if os.path.exists("one_word_descriptions.pickle") == False:
+    if os.path.exists("one_word_descriptions_s.pickle") == False:
         print("One word descriptions are being created...")
         time1 = datetime.now()
         nouns_list = get_nouns_list(qn_intents)
         nouns_list.extend(get_nouns_list(res_intents))
-        definations1=definations('abbreviated_corpus.csv','series.pickle', nouns_list)
+        definations_s1=definations_s('abbreviated_corpus_s.csv','series_s.pickle', nouns_list)
         time2 = datetime.now()
         print("One word descriptions created in (seconds): ", (time2-time1).total_seconds())
 
     #Entity extraction
-    if os.path.exists("entities_mapped_to_questions_dictionary.pickle") == False or os.path.exists("entities_mapped_to_responses_dictionary.pickle") == False:
+    if os.path.exists("entities_mapped_to_questions_dictionary_s.pickle") == False or os.path.exists("entities_mapped_to_responses_dictionary_s.pickle") == False:
         print("Entity files are being created...")
         time1 = datetime.now()
-        generate_entities_mapped_to_corpus_dictionary('abbreviated_corpus.csv')
+        generate_entities_mapped_to_corpus_dictionary('abbreviated_corpus_s.csv')
         time2 = datetime.now()
         print("Entity files created in (seconds): ", (time2-time1).total_seconds())
 
     #Corpus dictionary
-    if os.path.exists("corpus.txt") == False or os.path.exists("words_set.pickle") == False:
+    if os.path.exists("corpus_s.txt") == False or os.path.exists("words_set_s.pickle") == False:
         print("Corpus dictionary is being created...")
         time1 = datetime.now()
         build_corpus_dictionary(original_corpus)
@@ -2058,15 +2059,15 @@ def create_files():
 
 start_time = datetime.now()
 
-# original_corpus = r'C:\Users\Admin\Documents\2020501072\DS_2ndyear\Final chatbot files\QuestionsResponsesISRO.csv'
-# twisted_questions = r'C:\Users\Admin\Documents\2020501072\DS_2ndyear\Final chatbot files\test_questions.csv'
+# original_corpus = r'C:\Users\Admin\Documents\2020501072\DS_2ndyear\Final chatbot files\QuestionsResponsesISRO_s.csv'
+# twisted_questions = r'C:\Users\Admin\Documents\2020501072\DS_2ndyear\Final chatbot files\test_questions_s.csv'
 # BuildChatbot(original_corpus)
 
 
 def own_func():
     global original_corpus,twisted_questions
-    original_corpus = r'C:\Users\Admin\Documents\2020501072\DS_2ndyear\Final chatbot files\QuestionsResponsesISRO.csv'
-    twisted_questions = r'C:\Users\Admin\Documents\2020501072\DS_2ndyear\Final chatbot files\test_questions.csv'
+    original_corpus = "QuestionsResponsesISRO.csv"
+    twisted_questions = "test_questions.csv"
     
     print(os.path.abspath(os.getcwd()))
     # original_corpus = oc
@@ -2074,33 +2075,33 @@ def own_func():
     BuildChatbot(original_corpus)
 
 #questions and intents
-# self.raw_questions =  pd.read_pickle("questions.pickle")
-# self.raw_responses =  pd.read_pickle("responses.pickle")
-# self.questionlist =  pd.read_pickle("abb_questions.pickle")
-# self.responselist =  pd.read_pickle("abb_responses.pickle")
-# self.qn_intents =  pd.read_pickle("questions_intents.pickle")
-# self.res_intents =  pd.read_pickle("responses_intents.pickle")
-# self.syn_dict =  pd.read_pickle("syn_dict.pickle")
-# self.word_to_qn_intents_dict =  pd.read_pickle("word_to_qn_intents_dict.pickle")
-# self.word_to_res_intents_dict =  pd.read_pickle("word_to_res_intents_dict.pickle")
+# self.raw_questions =  pd.read_pickle("questions_s.pickle")
+# self.raw_responses =  pd.read_pickle("responses_s.pickle")
+# self.questionlist =  pd.read_pickle("abb_questions_s.pickle")
+# self.responselist =  pd.read_pickle("abb_responses_s.pickle")
+# self.qn_intents =  pd.read_pickle("questions_intents_s.pickle")
+# self.res_intents =  pd.read_pickle("responses_intents_s.pickle")
+# self.syn_dict =  pd.read_pickle("syn_dict_s.pickle")
+# self.word_to_qn_intents_dict =  pd.read_pickle("word_to_qn_intents_dict_s.pickle")
+# self.word_to_res_intents_dict =  pd.read_pickle("word_to_res_intents_dict_s.pickle")
 
     
     global raw_questions,raw_responses,questionlist,responselist,qn_intents,res_intents,syn_dict,word_to_qn_intents_dict,word_to_res_intents_dict
-    raw_questions =  pd.read_pickle("questions.pickle")
-    raw_responses =  pd.read_pickle("responses.pickle")
-    questionlist =  pd.read_pickle("abb_questions.pickle")
-    responselist =  pd.read_pickle("abb_responses.pickle")
-    qn_intents =  pd.read_pickle("questions_intents.pickle")
-    res_intents =  pd.read_pickle("responses_intents.pickle")
-    syn_dict =  pd.read_pickle("syn_dict.pickle")
-    word_to_qn_intents_dict =  pd.read_pickle("word_to_qn_intents_dict.pickle")
-    word_to_res_intents_dict =  pd.read_pickle("word_to_res_intents_dict.pickle")
+    raw_questions =  pd.read_pickle("questions_s.pickle")
+    raw_responses =  pd.read_pickle("responses_s.pickle")
+    questionlist =  pd.read_pickle("abb_questions_s.pickle")
+    responselist =  pd.read_pickle("abb_responses_s.pickle")
+    qn_intents =  pd.read_pickle("questions_intents_s.pickle")
+    res_intents =  pd.read_pickle("responses_intents_s.pickle")
+    syn_dict =  pd.read_pickle("syn_dict_s.pickle")
+    word_to_qn_intents_dict =  pd.read_pickle("word_to_qn_intents_dict_s.pickle")
+    word_to_res_intents_dict =  pd.read_pickle("word_to_res_intents_dict_s.pickle")
 
     create_files()
 
     #abbreviations
     global abbreviations
-    abbreviations = pd.read_pickle('abbreviations.pickle')
+    abbreviations = pd.read_pickle('abbreviations_s.pickle')
     global abbreviations_dict
     abbreviations_dict = {}
     for i in abbreviations:
@@ -2109,20 +2110,20 @@ def own_func():
 
     #phrases
     global sp,sin_word_def
-    sp = pd.read_pickle("phrases.pickle")
+    sp = pd.read_pickle("phrases_s.pickle")
 
     #one word descriptions
-    sin_word_def = pd.read_pickle("one_word_descriptions.pickle")
+    sin_word_def = pd.read_pickle("one_word_descriptions_s.pickle")
 
     #entity extraction
     global arr,arr1,corpus_dict,standard_dict,corpus_dic
-    arr = pd.read_pickle("entities_mapped_to_questions_dictionary.pickle")
-    arr1 = pd.read_pickle("entities_mapped_to_responses_dictionary.pickle")
+    arr = pd.read_pickle("entities_mapped_to_questions_dictionary_s.pickle")
+    arr1 = pd.read_pickle("entities_mapped_to_responses_dictionary_s.pickle")
 
     #spell check    
-    corpus_dict = enchant.PyPWL("corpus.txt")
+    corpus_dict = enchant.PyPWL("corpus_s.txt")
     standard_dict = enchant.Dict("en_US")
-    corpus_dic = pd.read_pickle("words_set.pickle")
+    corpus_dic = pd.read_pickle("words_set_s.pickle")
 
     end_time = datetime.now()
     print("Time (in minutes): ", (end_time-start_time).total_seconds()/60)
@@ -2186,12 +2187,12 @@ def startbot(usertext):
 
 # In[ ]:
 
-# original_corpus = r'C:\Users\Admin\Documents\2020501072\DS_2ndyear\Final chatbot files\QuestionsResponsesISRO.csv'
-# twisted_questions = r'C:\Users\Admin\Documents\2020501072\DS_2ndyear\Final chatbot files\test_questions.csv'
+# original_corpus = r'C:\Users\Admin\Documents\2020501072\DS_2ndyear\Final chatbot files\QuestionsResponsesISRO_s.csv'
+# twisted_questions = r'C:\Users\Admin\Documents\2020501072\DS_2ndyear\Final chatbot files\test_questions_s.csv'
 
 # own_func()
 
 
 
 
-    
+     

@@ -1,19 +1,12 @@
-function getBotResponse(input) {
-    //rock paper scissors
-    if (input == "rock") {
-        return "paper";
-    } else if (input == "paper") {
-        return "scissors";
-    } else if (input == "scissors") {
-        return "rock";
+function getBotResponse(){
+    var rawText = $("#textInput").val();
+    var userHtml = '<p class = "userText"><span>' + rawText + '</span></p>';
+    $("#textInput").val("");
+    $("#chatbox").append(userHtml);
+    document.getElementById('userInput').scrollIntoView({block:'start',behaviour:'smooth'});
+    $.get("/get", {msg:rawText }).done(function(data) {
+    var botHtml = '<p class ="botText"><span>' + data + '</span></p>';
+    $("#chatbox").append(botHtml);
+    document.getElementById('userInput').scrollIntoView({block : 'start',behaviour:'smooth'});
+    });
     }
-
-    // Simple responses
-    if (input == "hello") {
-        return "Hello there!";
-    } else if (input == "goodbye") {
-        return "Talk to you later!";
-    } else {
-        return "Try asking something else!";
-    }
-}

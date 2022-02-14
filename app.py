@@ -31,26 +31,33 @@ def upload_file1():
     
 @app.route('/typebot', methods = ['GET','POST'])
 def typebot():
-    s=request.form.get("bottype")
-    session["s"] = s
+    s = request.args.get("types")
     print("sssss",s)
-    oc=session['first_file']
-    tq=session['Second_file']
-    print("occc,tccc",oc,tq)
+    # tfidf_run()
+    # s=request.form.get("bottype")
+    session["s"] = s
+    # print("sssss",s)
+    # oc=session['first_file']
+    # tq=session['Second_file']
+    # print("occc,tccc",oc,tq)
     if s == "tfidf":
         tfidf_run()
     elif s =="synonym":
         own_func()
     elif s == "word2vec":
         word2vec_run()
-    # scc = own_func(upload_file1,upload_file2)
+    # # scc = own_func(upload_file1,upload_file2)
 
 
     return render_template('index.html')
 @app.route('/feedback', methods = ['GET','POST'])
 
 def feedback():
-    return render_template('feedback.html',flag=1)
+    return render_template('feed1.html')
+@app.route('/indexfile', methods = ['GET','POST'])
+
+def indexfile():
+    return render_template('index.html')
 @app.route('/reviewbot', methods = ['GET','POST'])
 def reviewbot():
     resp = request.form.get("botreview")
@@ -81,6 +88,8 @@ def userresponse():
 @app.route("/get")
 def get_bot_response():
     userText = request.args.get("msg") #get data from input,we write js  to index.html
+    print("texttt",userText)
+    # res = run_chatbot(userText)
     s = session["s"]
     if s == "tfidf":
         res = run_chatbot(userText)
@@ -92,10 +101,10 @@ def get_bot_response():
 
     
 
-    print("texttt",userText)
-    userText1=userText.lower()
-    if userText1=="bye":
-        return redirect(url_for('feedback'))
+    
+    # userText1=userText.lower()
+    # if userText1=="bye":
+    #     return redirect(url_for('feedback'))
         # return render_template('feedback.html',flag=1)
 
     # x=startbot(userText)

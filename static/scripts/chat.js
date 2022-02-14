@@ -34,46 +34,62 @@ function getTime() {
 }
 
 // Gets the first message
-function firstBotMessage() {
-    let firstMessage = "How's it going?"
-    document.getElementById("botStarterMessage").innerHTML = '<p class="botText"><span>' + firstMessage + '</span></p>';
+// function firstBotMessage() {
+//     let firstMessage = "How's it going?"
+//     document.getElementById("botStarterMessage").innerHTML = '<p class="botText"><span>' + firstMessage + '</span></p>';
 
+//     let time = getTime();
+
+//     $("#chat-timestamp").append(time);
+//     document.getElementById("userInput").scrollIntoView(false);
+// }
+
+// firstBotMessage();
+
+// Retrieves the response
+// function getHardResponse(userText) {
+//     // let botResponse = getBotResponse(userText);
+//     // let botHtml = '<p class="botText"><span>' + botResponse + '</span></p>';
+//     // $("#chatbox").append(botHtml);
+
+//     // document.getElementById("chat-bar-bottom").scrollIntoView(true);
+
+// }
+
+//Gets the text text from the input box and processes it
+function getBotResponse() {
+    
+    var rawText = $("#textInput").val();
+
+    var userHtml = '<p class = "userText"><img src="static/img/user.png" width="40" height="30"><span>' + rawText + '</span></p>';
+    $("#textInput").val("");
+    $("#chatbox").append(userHtml);
+    document.getElementById('userInput').scrollIntoView({block:'start',behaviour:'smooth'});
+    
+	
+    $.get("/get", {msg:rawText }).done(function(data) {
+    var botHtml = '<p class ="botText"><img class="ChatItem-avatarImage" src="static/img/robo1.png" width="40" height="30"><span>' + data + '</span></p>';
+    
     let time = getTime();
 
     $("#chat-timestamp").append(time);
-    document.getElementById("userInput").scrollIntoView(false);
-}
-
-firstBotMessage();
-
-// Retrieves the response
-function getHardResponse(userText) {
-    let botResponse = getBotResponse(userText);
-    let botHtml = '<p class="botText"><span>' + botResponse + '</span></p>';
     $("#chatbox").append(botHtml);
-
-    document.getElementById("chat-bar-bottom").scrollIntoView(true);
-}
-
-//Gets the text text from the input box and processes it
-function getResponse() {
-    let userText = $("#textInput").val();
-
-    if (userText == "") {
-        userText = "I love Code Palace!";
+    // $("feedback1").html()
+    document.getElementById('userInput').scrollIntoView({block : 'start',behaviour:'smooth'});
+    if(rawText.toLowerCase()=="bye")
+    {
+        window.location.replace('http://127.0.0.1:5000/feedback');
     }
+    });
+    
+    
+    
+} 
+    // setTimeout(() => {
+    //     getHardResponse(userText);
+    // }, 1000)
 
-    let userHtml = '<p class="userText"><span>' + userText + '</span></p>';
 
-    $("#textInput").val("");
-    $("#chatbox").append(userHtml);
-    document.getElementById("chat-bar-bottom").scrollIntoView(true);
-
-    setTimeout(() => {
-        getHardResponse(userText);
-    }, 1000)
-
-}
 
 // Handles sending text via button clicks
 function buttonSendText(sampleText) {
@@ -90,16 +106,23 @@ function buttonSendText(sampleText) {
 }
 
 function sendButton() {
-    getResponse();
+    getBotResponse();
 }
 
 function heartButton() {
     buttonSendText("Heart clicked!")
 }
-
-// Press enter to send a message
-$("#textInput").keypress(function (e) {
-    if (e.which == 13) {
-        getResponse();
+$("#textInput").keypress(function(e) {
+    if(e.which == 13) {
+    getBotResponse();
     }
-});
+    });
+    // $("#buttonInput").click(function() {
+    // getBotResponse();
+    // });
+// Press enter to send a message
+// $("#textInput").keypress(function (e) {
+//     if (e.which == 13) {
+//         getResponse();
+//     }
+// });

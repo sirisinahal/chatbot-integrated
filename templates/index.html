@@ -1,55 +1,87 @@
 <html>
     <style>
         body {
-            background: rgba(35, 119, 139, 0.493) }
+            background: rgba(35, 119, 139, 0.493)
+         }
         section {
             background: rgba(238, 192, 39, 0.863);
-            font-size: 29px;
-            color: rgb(0, 0, 0);
+            font-size: 33px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: rgb(180, 19, 19);
             border-radius: 4em;
             padding: 4em;
-            position: absolute;
+            position: fixed;
             top: 50%;
             left: 50%;
             margin-right: -50%;
-            transform: translate(-50%, -50%) }
+            transform: translate(-50%, -50%)
+            
+         }
       </style>
   <section>
-  <head>
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</head>
-<body>
-<h1>Flask Chatbot</h1>
-<div>
-<div id = "chatbox">
-<p class = "botText"><span>Hi! Iam your Chatterbot.</span></p>
-</div>
-<div id = "userInput">
-<input id ="textInput" type ="text" name="msg" placeholder="Message">
-<input id = "buttonInput" type = "submit" value="Send">
-</div>
-<script>
-function getBotResponse(){
-var rawText = $("#textInput").val();
-var userHtml = '<p class = "userText"><span>' + rawText + '</span></p>';
-$("#textInput").val("");
-$("#chatbox").append(userHtml);
-document.getElementById('userInput').scrollIntoView({block:'start',behaviour:'smooth'});
-$.get("/get", {msg:rawText }).done(function(data) {
-var botHtml = '<p class ="botText"><span>' + data + '</span></p>';
-$("#chatbox").append(botHtml);
-document.getElementById('userInput').scrollIntoView({block : 'start',behaviour:'smooth'});
-});
-}
-$("#textInput").keypress(function(e) {
-if(e.which == 13) {
-getBotResponse();
-}
-});
-$("#buttonInput").click(function() {
-getBotResponse();
-})
-</script>
-</div>
-</body>
-  </section>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chat Bot</title>
+    
+        <link rel="stylesheet" href="static/css/chat.css">
+        <link rel="stylesheet" href="static/css/home.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    </head>
+    
+    <body>
+        <h1> Bot is ready to chat</h1>
+    </section>
+        <!-- CHAT BAR BLOCK -->
+        <div id="feedback1"></div>
+        <div class="chat-bar-collapsible">
+            <button id="chat-button" type="button" class="collapsible">Chat with us!
+                <i id="chat-icon" style="color: #fff;" class="fa fa-fw fa-comments-o"></i>
+            </button>
+    
+            <div class="content">
+                <div class="full-chat-block">
+                    <!-- Message Container -->
+                    <div class="outer-container">
+                        <div class="chat-container">
+                            <!-- Messages -->
+                            <div id="chatbox">
+                                <h5 id="chat-timestamp"></h5>
+                                <p id="botStarterMessage" class="botText"><img class="ChatItem-avatarImage" src="static/img/robo1.png" width="40" height="30"><span>Hi I'm robo</span></p>
+                            </div>
+    
+                            <!-- User input box -->
+                            <div class="chat-bar-input-block">
+                                <div id="userInput">
+                                    <input id="textInput" class="input-box" type="text" name="msg"
+                                        placeholder="Tap 'Enter' to send a message">
+                                    <p></p>
+                                </div>
+    
+                                <div class="chat-bar-icons">
+                                    <!-- <i id="chat-icon" style="color: crimson;" class="fa fa-fw fa-heart"
+                                        onclick="heartButton()"></i> -->
+                                    <i id="chat-icon" style="color: #333;" class="fa fa-fw fa-send"
+                                        onclick="sendButton()"></i>
+                                </div>
+                            </div>
+    
+                            <div id="chat-bar-bottom">
+                                <p></p>
+                            </div>
+    
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+        </div>
+    
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="static/scripts/chat.js"></script>
+    
+    </html>

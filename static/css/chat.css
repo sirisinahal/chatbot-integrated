@@ -18,6 +18,31 @@
     border: 3px solid white;
     border-bottom: none;
 }
+.darker {
+    border-color: #ccc;
+    background-color: #ddd;
+  }
+  
+  .container::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  .container img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+  }
+  
+  .container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+  }
+  
 
 .content {
     max-height: 0;
@@ -110,7 +135,7 @@
 }
 
 .userText span {
-    line-height: 1.5em;
+    line-height: 0.9em;
     display: inline-block;
     background: #5ca6fa;
     padding: 10px;
@@ -130,14 +155,14 @@
 }
 
 .botText span {
-    line-height: 1.5em;
+    line-height: 0.9em;
     display: inline-block;
     background: #e0e0e0;
     padding: 10px;
     border-radius: 8px;
     border-bottom-left-radius: 2px;
-    max-width: 80%;
-    margin-left: 10px;
+    max-width: 70%;
+    margin-left: 22px;
     animation: floatup .5s forwards
 }
 

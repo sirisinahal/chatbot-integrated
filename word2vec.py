@@ -1724,7 +1724,7 @@ def start_chatbot(usertext):
     # while(flag==True):
     
     final_list=[]
-    user_input=input('you :')
+    user_input=usertext
     user_input=spell_check(user_input,dic,standard_dict,corpus_dict)
     user_input=abbreviation_check(abb_check,user_input)
     user_input=P.replace_phrases(phrases_list,user_input)
